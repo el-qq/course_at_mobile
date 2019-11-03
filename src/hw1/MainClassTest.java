@@ -3,6 +3,10 @@ package hw1;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
+
 public class MainClassTest {
 
     private MainClass mainClass = new MainClass();
@@ -26,6 +30,18 @@ public class MainClassTest {
 
         String textError = "Метод getClassNumber должен больше -- " + numberToCompare;
         Assert.assertTrue(textError, actualNumber > numberToCompare);
+
+    }
+
+    @Test
+    public void testGetClassString() {
+
+        String actualString = mainClass.getClassString();
+        List<String> listExpectedWorlds = Arrays.asList("Hello", "hello");
+
+        boolean result = listExpectedWorlds.stream().anyMatch(actualString::contains);
+
+        Assert.assertTrue("В возврощаемой строке должна быть подстрока 'hello'или 'Hello'", result);
 
     }
 
