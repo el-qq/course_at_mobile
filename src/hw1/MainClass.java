@@ -1,6 +1,9 @@
 package hw1;
 
-public class MainClass {
+class MainClass {
 
+    static int getLocalNumber() {
+        return 14;
 
+    }
 }
