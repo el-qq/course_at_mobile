@@ -28,7 +28,7 @@ public class MainClassTest {
         int numberToCompare = 45;
         int actualNumber = mainClass.getClassNumber();
 
-        String textError = "Метод getClassNumber должен больше -- " + numberToCompare;
+        String textError = "Метод getClassNumber должен возвращать значение больше -- " + numberToCompare;
         Assert.assertTrue(textError, actualNumber > numberToCompare);
 
     }

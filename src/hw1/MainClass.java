@@ -16,4 +16,5 @@ class MainClass {
     public String getClassString(){
         return CLASS_STRING;
     }
+  
 }
