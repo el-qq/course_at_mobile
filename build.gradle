@@ -34,7 +34,7 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 
     // https://mvnrepository.com/artifact/io.appium/java-client
-    implementation 'io.appium:java-client::7.3.0'
+    implementation 'io.appium:java-client:7.2.0'
 
 }
 
