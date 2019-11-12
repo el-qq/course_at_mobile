@@ -1,4 +1,4 @@
-package course_at_mobile.hw1;
+package course_at_mobile.step0;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
