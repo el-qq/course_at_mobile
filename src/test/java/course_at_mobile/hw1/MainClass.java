@@ -1,4 +1,4 @@
-package hw1;
+package course_at_mobile.hw1;
 
 class MainClass {
 
