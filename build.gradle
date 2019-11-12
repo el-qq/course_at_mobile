@@ -29,6 +29,13 @@ dependencies {
 
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+
+    // https://mvnrepository.com/artifact/io.appium/java-client
+    implementation 'io.appium:java-client::7.3.0'
+
 }
 
 test {
