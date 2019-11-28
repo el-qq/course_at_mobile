@@ -33,6 +33,10 @@ class BaseTest {
 
     @AfterEach
     void TearDown() {
+        if (appiumDriver.getOrientation() == ScreenOrientation.LANDSCAPE) {
+            appiumDriver.rotate(ScreenOrientation.PORTRAIT);
+        }
+
         appWikipedia.quit();
     }
 
