@@ -20,14 +20,14 @@ class Step3Ex6 extends BaseTest {
         elementTwoResult.click();
 
         //  Важно: тест не должен дожидаться появления title
-        var titleArticleBy = By.id("");
+        var titleArticleBy = By.id("org.wikipedia:id/view_page_title_text");
         assertElementPresent(titleArticleBy);
 
     }
 
     private void assertElementPresent(By elementBy) {
         try {
-            appiumDriver.findElement(By.id("org.wikipedia:id/view_page_title_text"));
+            appiumDriver.findElement(elementBy);
         } catch (NoSuchElementException err) {
             Assertions.fail("Title у статьи НЕ нашелся");
         }
