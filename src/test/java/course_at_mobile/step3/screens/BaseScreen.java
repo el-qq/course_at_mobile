@@ -25,7 +25,7 @@ public class BaseScreen {
         return appiumDriver.findElements(elementsBy);
     }
 
-    WebElement findAndGetElement(By elementBy) {
+    public WebElement findAndGetElement(By elementBy) {
         return WaitHelper.waitAndGetElement(appiumDriver, elementBy);
     }
 

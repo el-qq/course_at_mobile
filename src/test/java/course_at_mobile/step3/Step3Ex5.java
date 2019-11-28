@@ -3,6 +3,7 @@ package course_at_mobile.step3;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 
 class Step3Ex5 extends BaseTest {
 
@@ -48,8 +49,10 @@ class Step3Ex5 extends BaseTest {
         var listRecords = appWikipedia.listsScreen.getListNameRecords();
         Assertions.assertEquals(listRecords.size(), 1, "Количество записей после удаления больше 1. Ожидается, что будет 1");
 
-        var actualName = listRecords.get(0).getText();
-        Assertions.assertEquals(actualName, titleFirst, "После удаления в списке отображается другая запись");
+        // Перейти в неё и убеждается, что title совпадает
+        listRecords.get(0).click();
+        var actualTitle = appWikipedia.findAndGetElement(By.id("org.wikipedia:id/view_page_title_text")).getText();
+        Assertions.assertEquals(actualTitle, titleFirst, "После удаления в списке отображается другая запись");
 
     }
 
