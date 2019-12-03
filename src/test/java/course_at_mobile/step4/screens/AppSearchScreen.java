@@ -2,6 +2,7 @@ package course_at_mobile.step4.screens;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
@@ -108,8 +109,39 @@ public class AppSearchScreen extends BaseScreen {
         }
     }
 
+    public void waitForElementByTitleAndDescription(String title, String description) {
+        try {
+            findAndGetElement(getLocatorForSearchTitleAndDescription(title, description));
+        } catch (TimeoutException err) {
+            throw new Error("Не найден результат с заданным заголовком и описанием: " + title + " и " + description);
+        }
+    }
+
+    public void checkTitleAndDescriptionOfTheNumberElementResult(Integer number, String title, String description) {
+        if (number <= 0) throw new AssertionError("Номер статьи для выбора должен быть больше нуля");
+        var listResult = findAndGetListElements(LIST_ELEMENT_BY);
+
+        if (listResult.size() < number)
+            throw new AssertionError("Нельзя выбрать статью, тк результатов меньше: " + listResult.size());
+
+        var webElementResult = listResult.get(number - 1);
+
+        try {
+            webElementResult.findElement(getLocatorForSearchTitleAndDescription(title, description));
+        } catch (NoSuchElementException err) {
+            throw new Error("Не найден результат с заданным заголовком и описанием: " + title + " и " + description);
+        }
+    }
+
+
     private By getLocatorForSaveToReadingList(String nameList) {
         return By.xpath("//android.widget.LinearLayout//android.widget.TextView[@text='{NAME_LIST}']".replace("{NAME_LIST}", nameList));
     }
+
+    private By getLocatorForSearchTitleAndDescription(String title, String description) {
+        return By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//android.widget.TextView[@text='{TITLE}']|/../android.widget.TextView[@text='{DESCRIPTION}']"
+                .replace("{DESCRIPTION}", description).replace("{TITLE}", title));
+    }
+
 
 }
