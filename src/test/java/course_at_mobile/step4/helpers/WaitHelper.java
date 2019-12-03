@@ -1,4 +1,4 @@
-package course_at_mobile.step4;
+package course_at_mobile.step4.helpers;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WaitHelper {
 
-    private static final long BASE_TIMEOUT = 5;
+    private static final long BASE_TIMEOUT = 10;
 
     public static void waitForElementNotPresent(AppiumDriver appiumDriver, By elementBy) {
         var webDriverWait = new WebDriverWait(appiumDriver, BASE_TIMEOUT);
@@ -16,7 +16,6 @@ public class WaitHelper {
 
         webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(elementBy));
     }
-
 
     public static void waitForElementPresent(AppiumDriver appiumDriver, By elementBy) {
         waitForElementPresent(appiumDriver, elementBy, elementBy.toString(), BASE_TIMEOUT);
@@ -32,6 +31,5 @@ public class WaitHelper {
 
         return webDriverWait.until(ExpectedConditions.presenceOfElementLocated(elementBy));
     }
-
 
 }

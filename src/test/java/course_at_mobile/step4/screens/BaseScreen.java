@@ -1,6 +1,6 @@
 package course_at_mobile.step4.screens;
 
-import course_at_mobile.step4.WaitHelper;
+import course_at_mobile.step4.helpers.WaitHelper;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
@@ -35,6 +35,10 @@ public class BaseScreen {
 
     void waitForElementNotPresent(By elementBy) {
         WaitHelper.waitForElementNotPresent(appiumDriver, elementBy);
+    }
+
+    void back() {
+        appiumDriver.navigate().back();
     }
 
     public void quit() {

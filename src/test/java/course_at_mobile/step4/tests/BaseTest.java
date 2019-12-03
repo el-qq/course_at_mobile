@@ -1,5 +1,6 @@
-package course_at_mobile.step4;
+package course_at_mobile.step4.tests;
 
+import course_at_mobile.step4.screens.AppMainScreen;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +11,7 @@ import java.net.URL;
 
 class BaseTest {
 
-    AppWikipedia appWikipedia;
+    AppMainScreen appMainScreen;
     AndroidDriver appiumDriver;
 
     @BeforeEach
@@ -28,7 +29,7 @@ class BaseTest {
         //desiredCapabilities.setCapability("app", pathToApk);
 
         appiumDriver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities);
-        appWikipedia = new AppWikipedia(appiumDriver);
+        appMainScreen = new AppMainScreen(appiumDriver);
     }
 
     @AfterEach
@@ -37,7 +38,7 @@ class BaseTest {
             appiumDriver.rotate(ScreenOrientation.PORTRAIT);
         }
 
-        appWikipedia.quit();
+        appiumDriver.quit();
     }
 
 }
