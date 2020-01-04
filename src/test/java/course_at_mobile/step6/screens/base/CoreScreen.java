@@ -1,4 +1,4 @@
-package course_at_mobile.step6.screens;
+package course_at_mobile.step6.screens.base;
 
 import course_at_mobile.step6.helpers.WaitHelper;
 import io.appium.java_client.AppiumDriver;
@@ -13,14 +13,14 @@ import java.time.Duration;
 import java.util.List;
 
 
-public class BaseScreen {
-    AppiumDriver appiumDriver;
+public abstract class CoreScreen {
+    protected AppiumDriver appiumDriver;
 
-    protected BaseScreen(AppiumDriver appiumDriver) {
+    protected CoreScreen(AppiumDriver appiumDriver) {
         this.appiumDriver = appiumDriver;
     }
 
-    List<WebElement> findAndGetListElements(By elementsBy) {
+    protected List<WebElement> findAndGetListElements(By elementsBy) {
         waitForElementPresent(elementsBy);
         return appiumDriver.findElements(elementsBy);
     }
@@ -29,7 +29,7 @@ public class BaseScreen {
         return WaitHelper.waitAndGetElement(appiumDriver, elementBy);
     }
 
-    void waitForElementPresent(By elementBy) {
+    protected void waitForElementPresent(By elementBy) {
         WaitHelper.waitForElementPresent(appiumDriver, elementBy);
     }
 

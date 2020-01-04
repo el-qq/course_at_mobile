@@ -1,17 +1,14 @@
-package course_at_mobile.step6.screens;
+package course_at_mobile.step6.screens.ios;
 
+import course_at_mobile.step6.screens.base.AppArticleScreen;
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 
-public class AppArticleScreen extends BaseScreen {
-
-    private static final By TITLE_BY = By.id("org.wikipedia:id/view_page_title_text");
-
-    protected AppArticleScreen(AppiumDriver appiumDriver) {
+public class IosArticleScreen extends AppArticleScreen {
+    protected IosArticleScreen(AppiumDriver appiumDriver) {
         super(appiumDriver);
-    }
 
+    }
     public String getNameTitle() {
         var title = findAndGetElement(TITLE_BY);
         return title.getText();

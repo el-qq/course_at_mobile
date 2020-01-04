@@ -19,37 +19,22 @@ class MyListsTests extends BaseTest {
         var listResult = searchScreen.getListWebElementsResult();
         if (listResult.size() < 2) throw new AssertionError("Результат поиска состоит из менее 2 статей");
 
-        // Запоминаем первую и вторую ссылку
         var titleFirst = listResult.get(0).getText();
         var titleTwo = listResult.get(1).getText();
 
-        var webElementFirst = searchScreen.findByTextAndReturnWebElement(titleFirst);
+        searchScreen.addFirstArticleToList(titleFirst, NAME_LISTS);
 
-        // Добавляем первый результат в список
-        searchScreen.openMenuToElement(webElementFirst);
-        searchScreen.clickAddToReadingList();
-
-        // Но перед этим создаем новый список
-        searchScreen.clickGotIt();
-        searchScreen.setNewNameListAndClickOk(NAME_LISTS);
-
-        // добавляем вторую запись в список
-        var webElementTwo = searchScreen.findByTextAndReturnWebElement(titleTwo);
-        searchScreen.longTapToElement(webElementTwo);
-        searchScreen.clickAddToReadingList();
-        searchScreen.clickSaveToReadingList(NAME_LISTS);
+        searchScreen.addArticleToList(titleTwo, NAME_LISTS);
 
         var mainScreen = searchScreen.clickBlackAndReturmMainScreen();
         var listsScreen = mainScreen.menuNavigation.goToMyLists();
         listsScreen.clickListByName(NAME_LISTS);
 
-        // удаляем вторую запись
         listsScreen.deleteLinkFromListDoubleTap(titleTwo);
 
         var listRecords = listsScreen.getListNameRecords();
-        Assertions.assertEquals(listRecords.size(), 1, "Количество записей после удаления больше 1. Ожидается, что будет 1");
+        Assertions.assertEquals(1, listRecords.size(), "Количество записей после удаления больше 1. Ожидается, что будет 1");
 
-        // Открываем первую статью и убеждаемся, что title совпадает
         var articleScreen = listsScreen.clickAndOpenArticleByName(titleFirst);
         var actualTitle = articleScreen.getNameTitle();
         Assertions.assertEquals(actualTitle, titleFirst, "После удаления в списке отображается другая запись");
