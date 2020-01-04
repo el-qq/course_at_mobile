@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WaitHelper {
 
-    private static final long BASE_TIMEOUT = 10;
+    private static final long BASE_TIMEOUT = 15;
 
     public static void waitForElementNotPresent(AppiumDriver appiumDriver, By elementBy) {
         var webDriverWait = new WebDriverWait(appiumDriver, BASE_TIMEOUT);

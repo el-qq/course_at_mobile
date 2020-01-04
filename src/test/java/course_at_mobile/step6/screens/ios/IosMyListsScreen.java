@@ -1,5 +1,7 @@
-package course_at_mobile.step6.screens;
+package course_at_mobile.step6.screens.ios;
 
+import course_at_mobile.step6.screens.base.AppArticleScreen;
+import course_at_mobile.step6.screens.base.AppMyListsScreen;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
@@ -11,18 +13,15 @@ import org.openqa.selenium.WebElement;
 import java.time.Duration;
 import java.util.List;
 
-// Класс для работы с разделом MyLists
-public class AppMyListsScreen extends BaseScreen {
+public class IosMyListsScreen extends AppMyListsScreen {
 
-    private static final String
-            FOLDER_NAME_STRING_XPATH = "//android.widget.TextView[@text='{FOLDER_NAME}']",
-            ARTICLE_NAME_STRING_XPATH = "//android.widget.LinearLayout/android.widget.TextView[@text='{ARTICLE_NAME}']";
-
-    private static final By
-            LIST_NAME_BY = By.id("org.wikipedia:id/page_list_item_title");
-
-    public AppMyListsScreen(AppiumDriver appiumDriver) {
+    public IosMyListsScreen(AppiumDriver appiumDriver) {
         super(appiumDriver);
+
+        FOLDER_NAME_STRING_XPATH = "//XCUIElementTypeLink[@name='{FOLDER_NAME}']";
+        ARTICLE_NAME_STRING_XPATH = "//android.widget.LinearLayout/android.widget.TextView[@text='{ARTICLE_NAME}']";
+
+        LIST_NAME_BY = By.xpath("//XCUIElementTypeLink");
     }
 
     public List<WebElement> getListNameRecords() {
@@ -40,7 +39,7 @@ public class AppMyListsScreen extends BaseScreen {
 
     // Методы для работы в списке
     public void deleteLinkFromListDoubleTap(String nameLink) {
-        var listLinks = findAndGetListElements(By.id("org.wikipedia:id/page_list_item_title"));
+        var listLinks = findAndGetListElements(LIST_NAME_BY);
 
         for (WebElement element : listLinks) {
             if (element.getText().equals(nameLink)) {
@@ -48,7 +47,6 @@ public class AppMyListsScreen extends BaseScreen {
                 element.getLocation();
 
                 int left_x = element.getLocation().getX();
-                //int right_x = left_x + element.getSize().getWidth() * 3;
                 int right_x = left_x + element.getSize().getWidth() + left_x;
                 int upper_y = element.getLocation().getY();
                 int lower_y = upper_y + element.getSize().getHeight();
@@ -70,7 +68,7 @@ public class AppMyListsScreen extends BaseScreen {
     public AppArticleScreen clickAndOpenArticleByName(String nameArticle) {
         var article = findAndGetElement(getLocatorForArticleByName(nameArticle));
         article.click();
-        return new AppArticleScreen(appiumDriver);
+        return new IosArticleScreen(appiumDriver);
     }
 
     private By getLocatorForFolderName(String folderName) {

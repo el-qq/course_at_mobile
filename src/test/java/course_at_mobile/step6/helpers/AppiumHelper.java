@@ -17,8 +17,8 @@ public class AppiumHelper {
 
         var desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("platformName", "Android");
-        desiredCapabilities.setCapability("deviceName", "AndroidTestDevice");
-        desiredCapabilities.setCapability("platformVersion", "8.0");
+        desiredCapabilities.setCapability("deviceName", "a9pixel2");
+        desiredCapabilities.setCapability("platformVersion", "9.0");
         desiredCapabilities.setCapability("automationName", "Appium");
         desiredCapabilities.setCapability("appPackage", "org.wikipedia");
         desiredCapabilities.setCapability("appActivity", ".main.MainActivity");

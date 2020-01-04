@@ -1,5 +1,9 @@
-package course_at_mobile.step6.screens;
+package course_at_mobile.step6.screens.android;
 
+import course_at_mobile.step6.screens.base.AppArticleScreen;
+import course_at_mobile.step6.screens.base.AppMainScreen;
+import course_at_mobile.step6.screens.base.AppMyListsScreen;
+import course_at_mobile.step6.screens.base.AppSearchScreen;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -8,30 +12,44 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-
-// Класс для работы с разделом\экраном поиска
-public class AppSearchScreen extends BaseScreen {
-
-    public static final By
-            SEARCH_FIELD_BY = By.id("org.wikipedia:id/search_src_text"),
-            SEARCH_CLOSE_BY = By.id("org.wikipedia:id/search_close_btn"),
-            LIST_ELEMENT_BY = By.id("org.wikipedia:id/page_list_item_container"),
-            LIST_ITEM_TITLE_BY = By.id("org.wikipedia:id/page_list_item_title"),
-            ADD_LIST_BY = By.xpath("//*[@text='Add to reading list']"),
-            GO_IT_BY = By.id("org.wikipedia:id/onboarding_button"),
-            CREATE_NEW_BY = By.id("org.wikipedia:id/create_button"),
-            NAME_NEW_LIST_BY = By.id("org.wikipedia:id/text_input"),
-            OK_BUTTON_BY = By.xpath("//*[@text='OK']");
-
-    public AppSearchScreen(AppiumDriver appiumDriver) {
+public class AndroidSearchScreen extends AppSearchScreen {
+    public AndroidSearchScreen(AppiumDriver appiumDriver) {
         super(appiumDriver);
+        SEARCH_FIELD_BY = By.id("org.wikipedia:id/search_src_text");
+        SEARCH_CLOSE_BY = By.id("org.wikipedia:id/search_close_btn");
+        LIST_ELEMENT_BY = By.id("org.wikipedia:id/page_list_item_container");
+        LIST_ITEM_TITLE_BY = By.id("org.wikipedia:id/page_list_item_title");
+        ADD_LIST_BY = By.xpath("//*[@text='Add to reading list']");
+        GO_IT_BY = By.id("org.wikipedia:id/onboarding_button");
+        CREATE_NEW_BY = By.id("org.wikipedia:id/create_button");
+        NAME_NEW_LIST_BY = By.id("org.wikipedia:id/text_input");
+        OK_BUTTON_BY = By.xpath("//*[@text='OK']");
     }
 
     public AppMainScreen clickBlackAndReturmMainScreen() {
         findAndGetElement(By.className("android.widget.ImageButton")).click();
-        return new AppMainScreen(appiumDriver);
+        return new AndroidMainScreen(appiumDriver);
     }
 
+    @Override
+    public void addArticleToList(String articleName, String listName) {
+        var article = findByTextAndReturnWebElement(articleName);
+        longTapToElement(article);
+        clickAddToReadingList();
+        clickSaveToReadingList(listName);
+    }
+
+    @Override
+    public void addFirstArticleToList(String articleName, String listName) {
+        var article = findByTextAndReturnWebElement(articleName);
+        openMenuToElement(article);
+        clickAddToReadingList();
+
+        clickGotIt();
+        setNewNameListAndClickOk(listName);
+    }
+
+    @Override
     public void setTextForSearch(String textForSearch) {
         var searchField = findAndGetElement(SEARCH_FIELD_BY);
         searchField.sendKeys(textForSearch);
@@ -39,6 +57,8 @@ public class AppSearchScreen extends BaseScreen {
         // Ждем появления хотя бы одного результата поиска
         waitForElementPresent(LIST_ELEMENT_BY);
     }
+
+    ////////////////////////////////////
 
     public List<WebElement> getListWebElementsResult() {
         return findAndGetListElements(LIST_ITEM_TITLE_BY);
@@ -53,7 +73,7 @@ public class AppSearchScreen extends BaseScreen {
 
         listResult.get(number - 1).click();
 
-        return new AppArticleScreen(appiumDriver);
+        return new AndroidArticleScreen(appiumDriver);
     }
 
     public WebElement findByTextAndReturnWebElement(String textForSearch) {
@@ -71,7 +91,7 @@ public class AppSearchScreen extends BaseScreen {
         var closeButton = findAndGetElement(SEARCH_CLOSE_BY);
         closeButton.click();
 
-        return new AppMainScreen(appiumDriver);
+        return new AndroidMainScreen(appiumDriver);
     }
 
     // Выпадающее меню при долгом табе у элемента поиска
@@ -142,6 +162,4 @@ public class AppSearchScreen extends BaseScreen {
         return By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//android.widget.TextView[@text='{TITLE}']|/../android.widget.TextView[@text='{DESCRIPTION}']"
                 .replace("{DESCRIPTION}", description).replace("{TITLE}", title));
     }
-
-
 }
