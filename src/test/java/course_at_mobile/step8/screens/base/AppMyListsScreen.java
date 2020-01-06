@@ -3,6 +3,7 @@ package course_at_mobile.step8.screens.base;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public abstract class AppMyListsScreen extends CoreScreen {
 
     protected static By LIST_NAME_BY ;
 
-    public AppMyListsScreen(AppiumDriver appiumDriver) {
+    public AppMyListsScreen(RemoteWebDriver appiumDriver) {
         super(appiumDriver);
     }
 
@@ -24,7 +25,7 @@ public abstract class AppMyListsScreen extends CoreScreen {
     abstract public void clickListByName(String nameList);
 
     // Методы для работы в списке
-    abstract  public void deleteLinkFromListDoubleTap(String nameLink);
+    abstract  public void deleteLinkFromList(String nameLink);
 
     abstract public AppArticleScreen clickAndOpenArticleByName(String nameArticle);
 

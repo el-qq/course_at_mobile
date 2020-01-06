@@ -1,5 +1,6 @@
 package course_at_mobile.step8.tests;
 
+import course_at_mobile.step8.helpers.PlatformHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,14 +24,16 @@ class MyListsTests extends BaseTest {
         var titleTwo = listResult.get(1).getText();
 
         searchScreen.addFirstArticleToList(titleFirst, NAME_LISTS);
-
         searchScreen.addArticleToList(titleTwo, NAME_LISTS);
 
-        var mainScreen = searchScreen.clickBlackAndReturmMainScreen();
-        var listsScreen = mainScreen.menuNavigation.goToMyLists();
-        listsScreen.clickListByName(NAME_LISTS);
+        var mainScreen = searchScreen.clickBlackAndReturnMainScreen();
+        var listsScreen = mainScreen.goToMyLists();
 
-        listsScreen.deleteLinkFromListDoubleTap(titleTwo);
+        if (!PlatformHelper.isMW()) {
+            listsScreen.clickListByName(NAME_LISTS);
+        }
+
+        listsScreen.deleteLinkFromList(titleTwo);
 
         var listRecords = listsScreen.getListNameRecords();
         Assertions.assertEquals(1, listRecords.size(), "Количество записей после удаления больше 1. Ожидается, что будет 1");

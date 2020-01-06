@@ -9,13 +9,14 @@ import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.time.Duration;
 import java.util.List;
 
 public class AndroidMyListsScreen extends AppMyListsScreen {
 
-    public AndroidMyListsScreen(AppiumDriver appiumDriver) {
+    public AndroidMyListsScreen(RemoteWebDriver appiumDriver) {
         super(appiumDriver);
 
         FOLDER_NAME_STRING_XPATH = "//android.widget.TextView[@text='{FOLDER_NAME}']";
@@ -38,29 +39,33 @@ public class AndroidMyListsScreen extends AppMyListsScreen {
     }
 
     // Методы для работы в списке
-    public void deleteLinkFromListDoubleTap(String nameLink) {
-        var listLinks = findAndGetListElements(By.id("org.wikipedia:id/page_list_item_title"));
+    public void deleteLinkFromList(String nameLink) {
 
-        for (WebElement element : listLinks) {
-            if (element.getText().equals(nameLink)) {
+        if (driver instanceof AppiumDriver) {
+            AppiumDriver appiumDriver = (AppiumDriver) this.driver;
+            var listLinks = findAndGetListElements(By.id("org.wikipedia:id/page_list_item_title"));
 
-                element.getLocation();
+            for (WebElement element : listLinks) {
+                if (element.getText().equals(nameLink)) {
 
-                int left_x = element.getLocation().getX();
-                int right_x = left_x + element.getSize().getWidth() + left_x;
-                int upper_y = element.getLocation().getY();
-                int lower_y = upper_y + element.getSize().getHeight();
-                int middle_y = (upper_y + lower_y) / 2;
+                    element.getLocation();
 
-                var touchAction = new TouchAction(appiumDriver);
-                touchAction
-                        .press(PointOption.point(left_x, middle_y))
-                        .waitAction(WaitOptions.waitOptions(Duration.ofMillis(200)))
-                        .moveTo(PointOption.point(right_x, middle_y))
-                        .release()
-                        .perform();
+                    int left_x = element.getLocation().getX();
+                    int right_x = left_x + element.getSize().getWidth() + left_x;
+                    int upper_y = element.getLocation().getY();
+                    int lower_y = upper_y + element.getSize().getHeight();
+                    int middle_y = (upper_y + lower_y) / 2;
 
-                return;
+                    var touchAction = new TouchAction(appiumDriver);
+                    touchAction
+                            .press(PointOption.point(left_x, middle_y))
+                            .waitAction(WaitOptions.waitOptions(Duration.ofMillis(200)))
+                            .moveTo(PointOption.point(right_x, middle_y))
+                            .release()
+                            .perform();
+
+                    return;
+                }
             }
         }
     }
@@ -68,7 +73,7 @@ public class AndroidMyListsScreen extends AppMyListsScreen {
     public AppArticleScreen clickAndOpenArticleByName(String nameArticle) {
         var article = findAndGetElement(getLocatorForArticleByName(nameArticle));
         article.click();
-        return new AndroidArticleScreen(appiumDriver);
+        return new AndroidArticleScreen(driver);
     }
 
     private By getLocatorForFolderName(String folderName) {

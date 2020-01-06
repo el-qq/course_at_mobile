@@ -3,11 +3,11 @@ package course_at_mobile.step8.screens.ios;
 import course_at_mobile.step8.screens.base.AppArticleScreen;
 import course_at_mobile.step8.screens.base.AppMainScreen;
 import course_at_mobile.step8.screens.base.AppSearchScreen;
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class IosSearchScreen extends AppSearchScreen {
     private static final By BACK_FROM_ARTICLE = By.xpath("//XCUIElementTypeButton[@name='Back']");
     private  String NAME_LIST = "//XCUIElementTypeLink[@name='{NAME_LIST}}']";
 
-    public IosSearchScreen(AppiumDriver appiumDriver) {
+    public IosSearchScreen(RemoteWebDriver appiumDriver) {
         super(appiumDriver);
 
         SEARCH_FIELD_BY = By.xpath("//XCUIElementTypeSearchField[@name='Search Wikipedia']");
@@ -35,9 +35,9 @@ public class IosSearchScreen extends AppSearchScreen {
 
     }
 
-    public AppMainScreen clickBlackAndReturmMainScreen() {
+    public AppMainScreen clickBlackAndReturnMainScreen() {
         findAndGetElement(SEARCH_CLOSE_BY).click();
-        return new IosMainScreen(appiumDriver);
+        return new IosMainScreen(driver);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class IosSearchScreen extends AppSearchScreen {
 
         listResult.get(number - 1).click();
 
-        return new IosArticleScreen(appiumDriver);
+        return new IosArticleScreen(driver);
     }
 
     public WebElement findByTextAndReturnWebElement(String textForSearch) {
@@ -122,7 +122,7 @@ public class IosSearchScreen extends AppSearchScreen {
         var closeButton = findAndGetElement(SEARCH_CLOSE_BY);
         closeButton.click();
 
-        return new IosMainScreen(appiumDriver);
+        return new IosMainScreen(driver);
     }
 
     // Выпадающее меню при долгом табе у элемента поиска

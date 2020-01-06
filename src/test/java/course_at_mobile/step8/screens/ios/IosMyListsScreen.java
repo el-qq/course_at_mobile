@@ -9,13 +9,14 @@ import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.time.Duration;
 import java.util.List;
 
 public class IosMyListsScreen extends AppMyListsScreen {
 
-    public IosMyListsScreen(AppiumDriver appiumDriver) {
+    public IosMyListsScreen(RemoteWebDriver appiumDriver) {
         super(appiumDriver);
 
         FOLDER_NAME_STRING_XPATH = "//XCUIElementTypeLink[@name='{FOLDER_NAME}']";
@@ -37,30 +38,35 @@ public class IosMyListsScreen extends AppMyListsScreen {
         }
     }
 
-    // Методы для работы в списке
-    public void deleteLinkFromListDoubleTap(String nameLink) {
-        var listLinks = findAndGetListElements(LIST_NAME_BY);
+    @Override
+    public void deleteLinkFromList(String nameLink) {
 
-        for (WebElement element : listLinks) {
-            if (element.getText().equals(nameLink)) {
+        if (driver instanceof AppiumDriver) {
+            AppiumDriver appiumDriver = (AppiumDriver) this.driver;
 
-                element.getLocation();
+            var listLinks = findAndGetListElements(LIST_NAME_BY);
 
-                int left_x = element.getLocation().getX();
-                int right_x = left_x + element.getSize().getWidth() + left_x;
-                int upper_y = element.getLocation().getY();
-                int lower_y = upper_y + element.getSize().getHeight();
-                int middle_y = (upper_y + lower_y) / 2;
+            for (WebElement element : listLinks) {
+                if (element.getText().equals(nameLink)) {
 
-                var touchAction = new TouchAction(appiumDriver);
-                touchAction
-                        .press(PointOption.point(left_x, middle_y))
-                        .waitAction(WaitOptions.waitOptions(Duration.ofMillis(200)))
-                        .moveTo(PointOption.point(right_x, middle_y))
-                        .release()
-                        .perform();
+                    element.getLocation();
 
-                return;
+                    int left_x = element.getLocation().getX();
+                    int right_x = left_x + element.getSize().getWidth() + left_x;
+                    int upper_y = element.getLocation().getY();
+                    int lower_y = upper_y + element.getSize().getHeight();
+                    int middle_y = (upper_y + lower_y) / 2;
+
+                    var touchAction = new TouchAction(appiumDriver);
+                    touchAction
+                            .press(PointOption.point(left_x, middle_y))
+                            .waitAction(WaitOptions.waitOptions(Duration.ofMillis(200)))
+                            .moveTo(PointOption.point(right_x, middle_y))
+                            .release()
+                            .perform();
+
+                    return;
+                }
             }
         }
     }
@@ -68,7 +74,7 @@ public class IosMyListsScreen extends AppMyListsScreen {
     public AppArticleScreen clickAndOpenArticleByName(String nameArticle) {
         var article = findAndGetElement(getLocatorForArticleByName(nameArticle));
         article.click();
-        return new IosArticleScreen(appiumDriver);
+        return new IosArticleScreen(driver);
     }
 
     private By getLocatorForFolderName(String folderName) {
