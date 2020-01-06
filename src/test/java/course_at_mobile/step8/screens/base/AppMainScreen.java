@@ -1,7 +1,7 @@
 package course_at_mobile.step8.screens.base;
 
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 
 // Класс для работы с начальным разделом
@@ -12,7 +12,7 @@ public abstract class AppMainScreen extends CoreScreen {
 
     public AppMenuScreen menuNavigation;
 
-    public AppMainScreen(AppiumDriver appiumDriver) {
+    public AppMainScreen(RemoteWebDriver appiumDriver) {
         super(appiumDriver);
     }
 
@@ -20,4 +20,5 @@ public abstract class AppMainScreen extends CoreScreen {
 
     abstract public boolean checkNotPresentSearchResult();
 
+    public abstract AppMyListsScreen goToMyLists();
 }

@@ -1,6 +1,6 @@
 package course_at_mobile.step8.helpers;
 
-import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class PlatformHelper {
 
@@ -16,7 +16,7 @@ public class PlatformHelper {
         return instance;
     }
 
-    public boolean isAndroid() {
+    public static boolean isAndroid() {
         return isPlatform(PlatformSupport.ANDROID);
     }
 
@@ -24,11 +24,17 @@ public class PlatformHelper {
         return isPlatform(PlatformSupport.IOS);
     }
 
-    public AppiumDriver getDriver() throws Exception {
-        if (this.isAndroid()) {
+    public static boolean isMW() {
+        return isPlatform(PlatformSupport.MOBILE_WEB);
+    }
+
+    public RemoteWebDriver getDriver() throws Exception {
+        if (isAndroid()) {
             return AppiumHelper.getAndroidDriver();
-        } else if (this.isIOS()) {
+        } else if (isIOS()) {
             return AppiumHelper.getIosDriver();
+        } else if (isMW()) {
+            return AppiumHelper.getMobileWebDriver();
         } else {
             throw new Exception("Cannot detect type of the Driver. Platform value is: " + getPlatformVar());
         }

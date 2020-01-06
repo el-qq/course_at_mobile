@@ -3,16 +3,16 @@ package course_at_mobile.step8.screens.android;
 import course_at_mobile.step8.screens.base.AppArticleScreen;
 import course_at_mobile.step8.screens.base.AppMainScreen;
 import course_at_mobile.step8.screens.base.AppSearchScreen;
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.List;
 
 public class AndroidSearchScreen extends AppSearchScreen {
-    public AndroidSearchScreen(AppiumDriver appiumDriver) {
+    public AndroidSearchScreen(RemoteWebDriver appiumDriver) {
         super(appiumDriver);
         SEARCH_FIELD_BY = By.id("org.wikipedia:id/search_src_text");
         SEARCH_CLOSE_BY = By.id("org.wikipedia:id/search_close_btn");
@@ -25,9 +25,9 @@ public class AndroidSearchScreen extends AppSearchScreen {
         OK_BUTTON_BY = By.xpath("//*[@text='OK']");
     }
 
-    public AppMainScreen clickBlackAndReturmMainScreen() {
+    public AppMainScreen clickBlackAndReturnMainScreen() {
         findAndGetElement(By.className("android.widget.ImageButton")).click();
-        return new AndroidMainScreen(appiumDriver);
+        return new AndroidMainScreen(driver);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class AndroidSearchScreen extends AppSearchScreen {
 
         listResult.get(number - 1).click();
 
-        return new AndroidArticleScreen(appiumDriver);
+        return new AndroidArticleScreen(driver);
     }
 
     public WebElement findByTextAndReturnWebElement(String textForSearch) {
@@ -90,7 +90,7 @@ public class AndroidSearchScreen extends AppSearchScreen {
         var closeButton = findAndGetElement(SEARCH_CLOSE_BY);
         closeButton.click();
 
-        return new AndroidMainScreen(appiumDriver);
+        return new AndroidMainScreen(driver);
     }
 
     // Выпадающее меню при долгом табе у элемента поиска
